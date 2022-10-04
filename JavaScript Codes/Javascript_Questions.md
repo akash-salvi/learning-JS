@@ -724,5 +724,4 @@ _**Output**_
 
 [["id", "1"],["name", "sailesh"],["age", "26"],["work", "programmer"]] //Method 3
 ``
- 
 
