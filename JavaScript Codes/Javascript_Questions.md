@@ -724,4 +724,27 @@ _**Output**_
 
 [["id", "1"],["name", "sailesh"],["age", "26"],["work", "programmer"]] //Method 3
 ```
+     
+<b>37. In JavaScript, how do you display array into comma separated list?
+ 
+ _**Code**_
+ ```javascript
+let arr = ["Apple", "Mango", "Oranges"];
+
+//Method 1: Using array joins
+console.log(arr.join(", "));
+
+//Method 2 Converts the array to strings
+var str1 = arr.toString();
+var str2 = String(arr);
+console.log(str2); 
+
+```
+_**Output**_
+```javascript
+Apple, Mango, Orange //Method 1
+
+Apple, Mango, Orange //Method 2
+
+```
 
