@@ -729,3 +729,51 @@ inner func:  self.foo = bar
 Explaination : In the outer function, both `this` and `self` refer to `myObject` and therefore both can properly reference and access `foo`.
 
 In the inner function, though, this no longer refers to `myObject`. As a result, `this.foo` is undefined in the inner function, whereas the reference to the local variable `self` remains in scope and is accessible there.
+
+     
+<b>37. In JavaScript, how do you turn an Object into an Array[]?
+ 
+ _**Code**_
+ ```javascript
+let obj = { id: "1", name: "sailesh", age: "26", work: "programmer" };
+
+//Method 1: Convert the keys to Array using - Object.keys()
+console.log(Object.keys(obj));
+
+//Method 2 Converts the Values to Array using - Object.values()
+console.log(Object.values(obj));
+
+//Method 3 Converts both keys and values using - Object.entries()
+console.log(Object.entries(obj));
+```
+_**Output**_
+```javascript
+["id", "name", "age", "work"] //Method 1
+
+["1", "sailesh", "26", "programmer"] //Method 2
+
+[["id", "1"],["name", "sailesh"],["age", "26"],["work", "programmer"]] //Method 3
+```
+     
+<b>38. In JavaScript, how do you display array into comma separated list?
+ 
+ _**Code**_
+ ```javascript
+let arr = ["Apple", "Mango", "Oranges"];
+
+//Method 1: Using array joins
+console.log(arr.join(", "));
+
+//Method 2 Converts the array to strings
+var str1 = arr.toString();
+var str2 = String(arr);
+console.log(str2); 
+
+```
+_**Output**_
+```javascript
+Apple, Mango, Orange //Method 1
+
+Apple, Mango, Orange //Method 2
+
+```
