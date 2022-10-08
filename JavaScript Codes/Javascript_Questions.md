@@ -700,8 +700,38 @@ _**Output**_
 false
 true
 ```
+
+<b>36. What will the code below output to the console and why?</b>
+ 
+_**Code**_
+```javascript
+var myObject = {
+    foo: "bar",
+    func: function() {
+        var self = this;
+        console.log("outer func:  this.foo = " + this.foo);
+        console.log("outer func:  self.foo = " + self.foo);
+        (function() {
+            console.log("inner func:  this.foo = " + this.foo);
+            console.log("inner func:  self.foo = " + self.foo);
+        }());
+    }
+};
+myObject.func();
+```
+_**Output**_
+```javascript
+outer func:  this.foo = bar
+outer func:  self.foo = bar
+inner func:  this.foo = undefined
+inner func:  self.foo = bar
+```
+Explaination : In the outer function, both `this` and `self` refer to `myObject` and therefore both can properly reference and access `foo`.
+
+In the inner function, though, this no longer refers to `myObject`. As a result, `this.foo` is undefined in the inner function, whereas the reference to the local variable `self` remains in scope and is accessible there.
+
      
-<b>36. In JavaScript, how do you turn an Object into an Array[]?
+<b>37. In JavaScript, how do you turn an Object into an Array[]?
  
  _**Code**_
  ```javascript
@@ -725,7 +755,7 @@ _**Output**_
 [["id", "1"],["name", "sailesh"],["age", "26"],["work", "programmer"]] //Method 3
 ```
      
-<b>37. In JavaScript, how do you display array into comma separated list?
+<b>38. In JavaScript, how do you display array into comma separated list?
  
  _**Code**_
  ```javascript
@@ -747,4 +777,3 @@ Apple, Mango, Orange //Method 1
 Apple, Mango, Orange //Method 2
 
 ```
-
