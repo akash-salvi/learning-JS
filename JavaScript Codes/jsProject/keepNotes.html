@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notes storing </title>
+
+</head>
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .cont {
+
+        background-color: rgb(122, 100, 100);
+        color: white;
+        height: 45px;
+        box-sizing: border-box;
+    }
+
+    #head {
+        display: inline-block;
+        margin-left: 10px;
+        color: red;
+    }
+
+    #nav {
+        display: inline-block;
+    }
+
+    #ul {
+        list-style: none;
+    }
+
+    #ul li {
+        font-size: 18px;
+    }
+
+    #form {
+        margin-top: 15px;
+        display: flex;
+        float: right;
+    }
+
+    #search {
+        border: 2px solid cyan;
+        margin-right: 5px;
+    }
+
+    #head2 {
+        text-align: center;
+
+    }
+
+    #cont2 {
+        border: 1px dotted black;
+        width: 400px;
+        margin: auto;
+    }
+
+    #sau,
+    #btn {
+        margin: 5px;
+    }
+
+    #btn,
+    #btn1 {
+        background-color: skyblue;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #search {
+        border-radius: 4px;
+    }
+
+    #h2 {
+        text-align: center;
+        /* border: 1px solid black; */
+    }
+
+    #note1 {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 5px;
+    }
+
+    #noteCard {
+        width: 18rem;
+        border: 1px solid black;
+        margin: 10px;
+
+        padding: 2px 5px;
+        
+    }
+    .box{
+        cursor: pointer;
+        display: block;
+        margin: auto;
+        width: 100px;
+        border: 2px solid rgb(189, 23, 23);
+        border-radius: 6px;
+        background-color: aqua;
+        color: black;
+    }
+</style>
+
+<body>
+    <div class="cont">
+        <a href="notesapp.html">
+            <h3 id="head">
+                Saurav Notes
+            </h3>
+        </a>
+        <div id="nav">
+            <ul id="ul">
+                <li>Home</li>
+            </ul>
+        </div>
+        <form action="backend.js" id="form">
+
+            <div id="search">
+                <input type="text" placeholder="search" id="srch">
+            </div>
+            <button type="submit" id="btn1">
+                search
+            </button>
+        </form>
+    </div>
+    <h2 id="head2">
+        Welcome to Saurav's note.
+    </h2>
+    <div id="cont2">
+        <div id="sau">
+            <h4 class="title">Add your note title</h4>
+            <div id="title">
+              <textarea  id="t1" cols="45" rows="2"></textarea>
+            </div>
+            <h4 id="h4">
+                write a note
+            </h4>
+            <textarea name="mytext" id="textarea" cols="45" rows="3"></textarea>
+        </div>
+        <button id="btn">
+            add note
+        </button>
+    </div>
+    <div id="cont3">
+        <h2 id="h2">
+            Your notes
+        </h2>
+        <div class="box" id="box" onclick="funcdel()">
+            delete all notes
+        </div>
+        <hr>
+        <div id="note1" class="row"> </div>
+    </div>
+    <script>
+        // localStorage.clear();
+        showNotes();
+        let a = document.getElementById('btn');
+        a.addEventListener('click', function () {
+            let textarea = document.getElementById('textarea');
+            let t1=document.getElementById('t1');
+            let notes = localStorage.getItem('notes');
+            if (notes == null) {
+                saurav = [];
+            }
+            else {
+                saurav = JSON.parse(notes)
+                // saurav=notes;
+            }
+            let myobj={
+                title:t1.value,
+                text:textarea.value
+            }
+            saurav.push(myobj)
+            localStorage.setItem('notes', JSON.stringify(saurav));
+            // 
+            textarea.value = "";
+            t1.value="";
+            // console.log(saurav);
+            showNotes();
+        });
+        function showNotes() {
+            // let cont3=document.getElementById('cont3');
+            let notes = localStorage.getItem('notes');
+            if (notes == null) {
+                saurav = [];
+            }
+            else {
+                saurav = JSON.parse(notes);
+            }
+            let html = "";
+            saurav.forEach(function (element, index) {
+                html += `
+                <div class="noteCard" id="noteCard">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size: 16px;">${element.title}</h5>
+                        <p class="card-text"> ${element.text}</p>
+                        <button id="${index}"onclick="deleteNote(id)" class="btn btn-primary" style="background-color: #007bff;
+        border-color: #007bff; border-radius:5px;font-size:17px;cursor: pointer";>Delete Note</button>
+                    </div>
+                </div>`;
+            });
+            let notesElm = document.getElementById("note1");
+            let aa = saurav.length;
+            if (aa != 0) {
+                notesElm.innerHTML = html;
+            } else {
+                notesElm.innerHTML = `Nothing to show! Use "Add a Note" section above to add notes.`;
+            }
+
+        }
+        function deleteNote(index) {
+            let notes = localStorage.getItem('notes');
+            if (notes == null) {
+                saurav = [];
+            }
+            else {
+                saurav = JSON.parse(notes);
+            }
+            saurav.splice(index, 1);
+            localStorage.setItem("notes", JSON.stringify(saurav));
+            showNotes();
+
+        }
+       
+        let search = document.getElementById('srch');
+        search.addEventListener("input", function () {
+
+            let inputVal = search.value;
+            // console.log('Input event fired!', inputVal);
+            let noteCards = document.getElementsByClassName('noteCard');
+
+            Array.from(noteCards).forEach(function (element) {
+                console.log(element)
+                let cardTxt = element.getElementsByTagName("p")[0].innerText;
+                if (cardTxt.includes(inputVal)) {
+                    element.style.display = "block";
+                }
+                else {
+                    element.style.display="none";
+                }
+                // console.log(cardTxt);
+            })
+        })
+        function funcdel()
+        {
+            localStorage.clear();
+            showNotes();
+        }
+    </script>
+
+</body>
+
+</html>
